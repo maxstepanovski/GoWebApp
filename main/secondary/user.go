@@ -2,6 +2,10 @@ package secondary
 
 import "strconv"
 
+type Users struct {
+	Users []User
+}
+
 type User struct {
 	ID    int    "json:id"
 	Name  string "json:name"

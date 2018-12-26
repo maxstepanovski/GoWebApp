@@ -14,14 +14,13 @@ import (
 
 var DB_NAME = "mysql"
 var DB_CREDENTIALS = "root:i86Kwp5a@tcp(127.0.0.1:3306)/new_schema"
-var CREATE_ENDPOINT = "/api/user/create"
-var READ_ENDPOINT = "/api/user/read"
+var ENDPOINT = "/api/user"
 var LOCAL_HOST = ":8080"
 
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc(CREATE_ENDPOINT, CreateUser)
-	router.HandleFunc(READ_ENDPOINT, ReadUser)
+	router.HandleFunc(ENDPOINT, CreateUser).Methods("POST")
+	router.HandleFunc(ENDPOINT, RetrieveUsers).Methods("GET")
 	http.Handle("/", router)
 	http.ListenAndServe(LOCAL_HOST, nil)
 }
@@ -79,5 +78,30 @@ func ReadUser(responseWriter http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		fmt.Fprintf(responseWriter, err.Error())
 	}
-	fmt.Fprintf(responseWriter, ReadUser.ToString())
+	answer, _ := json.Marshal(ReadUser)
+	fmt.Fprintf(responseWriter, string(answer))
+}
+
+func RetrieveUsers(responseWriter http.ResponseWriter, request *http.Request) {
+	response := s.Users{}
+	responseWriter.Header().Set("Pragma", "no-cache")
+	database, openErr := sql.Open(DB_NAME, DB_CREDENTIALS)
+	defer database.Close()
+	if openErr != nil {
+		fmt.Fprintf(responseWriter, openErr.Error())
+	}
+	rows, readErr := database.Query("select * from users LIMIT 10")
+	if readErr != nil {
+		fmt.Fprintf(responseWriter, readErr.Error())
+	}
+	for rows.Next() {
+		user := s.User{}
+		rows.Scan(&user.ID, &user.Name, &user.First, &user.Last, &user.Email)
+		response.Users = append(response.Users, user)
+	}
+	jsonResponse, marshalErr := json.Marshal(response)
+	if marshalErr != nil {
+		fmt.Fprintf(responseWriter, marshalErr.Error())
+	}
+	fmt.Fprintf(responseWriter, string(jsonResponse))
 }
