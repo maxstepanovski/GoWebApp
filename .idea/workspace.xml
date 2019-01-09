@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f6fcc5e-f3b5-4153-841e-3375e74ff91a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../WebApplication/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/main/firstChapter.go" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/main/FirstChapter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/main/secondChapter.go" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/main/SecondChapter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/main/secondary/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/main/models/Api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WebApplication/main/secondary/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApplication/main/models/User.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/firstChapter.go" beforeDir="false" afterPath="$PROJECT_DIR$/main/firstChapter.go" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/shelf/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,11 +13,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../WebApplication/main/SecondChapter.go">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/secondChapter.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-718">
-              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+            <state relative-caret-position="915">
+              <caret line="61" column="1" selection-start-line="61" selection-start-column="1" selection-end-line="61" selection-end-column="1" />
+              <folding>
+                <element signature="e#14#200#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main/firstChapter.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -37,7 +45,7 @@
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../WebApplication" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -51,8 +59,7 @@
         <option value="$PROJECT_DIR$/main/firstChapter.go" />
         <option value="$PROJECT_DIR$/main/domain/ApiProcessing.go" />
         <option value="$PROJECT_DIR$/main/secondChapter.go" />
-        <option value="$PROJECT_DIR$/../WebApplication/main/firstChapter.go" />
-        <option value="$PROJECT_DIR$/../WebApplication/main/SecondChapter.go" />
+        <option value="$PROJECT_DIR$/main/firstChapter.go" />
       </list>
     </option>
   </component>
@@ -99,7 +106,7 @@
               <item name="WebApplication" type="b2602c69:ProjectViewProjectNode" />
               <item name="WebApplication" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
+              <item name="secondary" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -137,25 +144,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build SecondChapter.go">
-    <configuration name="go build SecondChapter.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="WebApplication" />
-      <working_directory value="$PROJECT_DIR$/../WebApplication/" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/../WebApplication/main/SecondChapter.go" />
-      <package value="WebApplication" />
-      <directory value="$PROJECT_DIR$/../WebApplication/" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build firstChapter.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="WebApplication" />
-      <working_directory value="$PROJECT_DIR$/../WebApplication/" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/../WebApplication/main/firstChapter.go" />
-      <package value="WebApplication" />
-      <directory value="$PROJECT_DIR$/../WebApplication/" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Go Build.go build secondChapter.go">
     <configuration name="go build firstChapter.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="WebApplication" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -165,13 +154,13 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
-    <configuration name="go build secondChapter.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="WebApplication" />
-      <working_directory value="$PROJECT_DIR$/../WebApplication/" />
+      <working_directory value="$PROJECT_DIR$/" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/../WebApplication/main/secondChapter.go" />
-      <package value="WebApplication" />
-      <directory value="$PROJECT_DIR$/../WebApplication/" />
+      <filePath value="$PROJECT_DIR$/main/main.go" />
+      <package value="firstChapter" />
+      <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
     <configuration name="go build secondChapter.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -185,11 +174,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build SecondChapter.go" />
-        <item itemvalue="Go Build.go build secondChapter.go (1)" />
-        <item itemvalue="Go Build.go build firstChapter.go (1)" />
         <item itemvalue="Go Build.go build secondChapter.go" />
         <item itemvalue="Go Build.go build firstChapter.go" />
+        <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
   </component>
@@ -208,7 +195,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.3295964" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3295964" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.3295964" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" />
@@ -287,7 +274,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../WebApplication/.idea/modules.xml">
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file:///usr/local/go/src/database/sql/sql.go">
@@ -314,20 +301,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/models/User.go" />
     <entry file="file://$PROJECT_DIR$/main/domain/ApiProcessing.go" />
-    <entry file="file://$PROJECT_DIR$/../WebApplication/main/FirstChapter.go">
+    <entry file="file://$PROJECT_DIR$/main/secondChapter.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
+        <state relative-caret-position="915">
+          <caret line="61" column="1" selection-start-line="61" selection-start-column="1" selection-end-line="61" selection-end-column="1" />
           <folding>
-            <element signature="e#14#122#0" expanded="true" />
+            <element signature="e#14#200#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../WebApplication/main/SecondChapter.go">
+    <entry file="file://$PROJECT_DIR$/main/firstChapter.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-718">
-          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        <state relative-caret-position="60">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
         </state>
       </provider>
     </entry>

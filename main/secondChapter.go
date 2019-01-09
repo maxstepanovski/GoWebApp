@@ -1,10 +1,12 @@
 package main
 
 import (
-	s "WebApplication/main/models"
+	s "WebApplication/main/secondary"
 	"database/sql"
+	_ "database/sql"
 	"encoding/json"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"

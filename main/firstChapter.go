@@ -1,7 +1,7 @@
 package main
 
 import (
-	s "WebApplication/main/models"
+	s "WebApplication/main/secondary"
 	"encoding/json"
 	"fmt"
 	"github.com/drone/routes"
