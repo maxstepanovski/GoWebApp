@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	sec "firstChapter/main/secondary"
+	s "WebApplication/main/secondary"
 	"fmt"
 	"github.com/drone/routes"
 	"net/http"
@@ -20,7 +20,7 @@ func HandleFunction(responseWriter http.ResponseWriter, request *http.Request) {
 	name :=  urlParams.Get(":name")
 	//surname := urlParams[":surname"]
 	text := "Hello, " + name
-	message := sec.API{text}
+	message := s.API{text}
 	response, error := json.Marshal(message)
 	if error != nil {
 		fmt.Println("error happened!")

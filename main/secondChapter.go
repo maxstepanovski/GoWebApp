@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	_ "database/sql"
 	"encoding/json"
-	s "firstChapter/main/secondary"
+	s "WebApplication/main/secondary"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
