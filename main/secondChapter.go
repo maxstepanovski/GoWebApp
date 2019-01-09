@@ -4,10 +4,12 @@ import (
 	s "WebApplication/main/secondary"
 	"database/sql"
 	_ "database/sql"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 )
@@ -35,6 +37,10 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 	User.Email = request.FormValue("email")
 	User.First = request.FormValue("first")
 	User.Last = request.FormValue("last")
+	file, _, _ := request.FormFile("image")
+	fileData, _ := ioutil.ReadAll(file)
+	fileString := base64.StdEncoding.EncodeToString(fileData)
+	User.Image = fileString
 	_, error := json.Marshal(User)
 	if error != nil {
 		fmt.Println("marshalling error!")
@@ -53,6 +59,7 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 			"', First='" + User.First +
 			"', Last='" + User.Last +
 			"', Email='" + User.Email +
+			"', Image='" + User.Image +
 			"'")
 	if err != nil {
 		fmt.Fprintf(responseWriter, err.Error())
@@ -96,7 +103,7 @@ func RetrieveUsers(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 	for rows.Next() {
 		user := s.User{}
-		rows.Scan(&user.ID, &user.Name, &user.First, &user.Last, &user.Email)
+		rows.Scan(&user.ID, &user.Name, &user.First, &user.Last, &user.Email, &user.Image)
 		response.Users = append(response.Users, user)
 	}
 	jsonResponse, marshalErr := json.Marshal(response)
