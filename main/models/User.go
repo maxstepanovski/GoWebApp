@@ -1,4 +1,4 @@
-package secondary
+package models
 
 import "strconv"
 

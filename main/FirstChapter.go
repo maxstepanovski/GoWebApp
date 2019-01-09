@@ -1,8 +1,8 @@
 package main
 
 import (
+	s "WebApplication/main/models"
 	"encoding/json"
-	s "WebApplication/main/secondary"
 	"fmt"
 	"github.com/drone/routes"
 	"net/http"
@@ -17,7 +17,7 @@ func main() {
 
 func HandleFunction(responseWriter http.ResponseWriter, request *http.Request) {
 	urlParams := request.URL.Query()
-	name :=  urlParams.Get(":name")
+	name := urlParams.Get(":name")
 	//surname := urlParams[":surname"]
 	text := "Hello, " + name
 	message := s.API{text}
