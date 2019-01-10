@@ -14,12 +14,21 @@ import (
 	"strconv"
 )
 
-var DB_NAME = "mysql"
-var DB_CREDENTIALS = "root:i86Kwp5a@tcp(127.0.0.1:3306)/new_schema"
-var ENDPOINT = "/api/user"
-var LOCAL_HOST = ":8080"
+const DB_NAME = "mysql"
+const DB_CREDENTIALS = "root:i86Kwp5a@tcp(127.0.0.1:3306)/new_schema"
+const ENDPOINT = "/api/user"
+const LOCAL_HOST = ":8080"
+
+var Database *sql.DB
 
 func main() {
+	db, error := sql.Open(DB_NAME, DB_CREDENTIALS)
+	if error != nil {
+		fmt.Println("couldn't open db")
+	}
+	defer db.Close()
+	Database = db
+
 	router := mux.NewRouter()
 	router.HandleFunc(ENDPOINT, CreateUser).Methods("POST")
 	router.HandleFunc(ENDPOINT, RetrieveUsers).Methods("GET")
@@ -46,14 +55,7 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 		fmt.Println("marshalling error!")
 	}
 
-	database, error := sql.Open(DB_NAME, DB_CREDENTIALS)
-	defer database.Close()
-
-	if error != nil {
-		fmt.Println("couldn't open db")
-	}
-
-	_, err := database.Exec(
+	_, err := Database.Exec(
 		"INSERT INTO users set ID='" + strconv.Itoa(User.ID) +
 			"', Nickname='" + User.Name +
 			"', First='" + User.First +
@@ -66,27 +68,6 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 	fmt.Fprintf(responseWriter, "object written to database")
 	fmt.Fprintf(responseWriter, User.ToString())
-}
-
-/**
-Read a user from sql database via webapplication api
-*/
-func ReadUser(responseWriter http.ResponseWriter, request *http.Request) {
-	id := request.FormValue("id")
-	ReadUser := s.User{}
-
-	database, error := sql.Open(DB_NAME, DB_CREDENTIALS)
-	defer database.Close()
-	if error != nil {
-		fmt.Println("couldn't open db")
-	}
-
-	err := database.QueryRow("select * from users where ID=?", id).Scan(&ReadUser.ID, &ReadUser.Name, &ReadUser.First, &ReadUser.Last, &ReadUser.Email)
-	if err != nil {
-		fmt.Fprintf(responseWriter, err.Error())
-	}
-	answer, _ := json.Marshal(ReadUser)
-	fmt.Fprintf(responseWriter, string(answer))
 }
 
 func RetrieveUsers(responseWriter http.ResponseWriter, request *http.Request) {
@@ -111,4 +92,19 @@ func RetrieveUsers(responseWriter http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(responseWriter, marshalErr.Error())
 	}
 	fmt.Fprintf(responseWriter, string(jsonResponse))
+}
+
+/**
+Read a user from sql database via webapplication api
+*/
+func ReadUser(responseWriter http.ResponseWriter, request *http.Request) {
+	id := request.FormValue("id")
+	ReadUser := s.User{}
+
+	err := Database.QueryRow("select * from users where ID=?", id).Scan(&ReadUser.ID, &ReadUser.Name, &ReadUser.First, &ReadUser.Last, &ReadUser.Email)
+	if err != nil {
+		fmt.Fprintf(responseWriter, err.Error())
+	}
+	answer, _ := json.Marshal(ReadUser)
+	fmt.Fprintf(responseWriter, string(answer))
 }
