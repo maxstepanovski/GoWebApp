@@ -6,6 +6,7 @@ import (
 	_ "database/sql"
 	"encoding/base64"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -20,12 +21,15 @@ const ENDPOINT = "/api/user"
 const LOCAL_HOST = ":8080"
 
 var Database *sql.DB
+var Format string
 
 func main() {
+	StartServer()
+}
+
+func StartServer() {
 	db, error := sql.Open(DB_NAME, DB_CREDENTIALS)
-	if error != nil {
-		fmt.Println("couldn't open db")
-	}
+	HandleError(error)
 	defer db.Close()
 	Database = db
 
@@ -34,6 +38,24 @@ func main() {
 	router.HandleFunc(ENDPOINT, RetrieveUsers).Methods("GET")
 	http.Handle("/", router)
 	http.ListenAndServe(LOCAL_HOST, nil)
+}
+
+func GetFormat(request *http.Request) {
+	Format = request.FormValue("format")
+}
+
+func SetFormat(data interface{}) []byte {
+	var apiOutput []byte
+	if Format == "json" {
+		output, err := json.Marshal(data)
+		HandleError(err)
+		apiOutput = output
+	} else if Format == "xml" {
+		output, err := xml.Marshal(data)
+		HandleError(err)
+		apiOutput = output
+	}
+	return apiOutput
 }
 
 /**
@@ -50,10 +72,6 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 	fileData, _ := ioutil.ReadAll(file)
 	fileString := base64.StdEncoding.EncodeToString(fileData)
 	User.Image = fileString
-	_, error := json.Marshal(User)
-	if error != nil {
-		fmt.Println("marshalling error!")
-	}
 
 	_, err := Database.Exec(
 		"INSERT INTO users set ID='" + strconv.Itoa(User.ID) +
@@ -63,35 +81,26 @@ func CreateUser(responseWriter http.ResponseWriter, request *http.Request) {
 			"', Email='" + User.Email +
 			"', Image='" + User.Image +
 			"'")
-	if err != nil {
-		fmt.Fprintf(responseWriter, err.Error())
-	}
+	HandleError(err)
 	fmt.Fprintf(responseWriter, "object written to database")
 	fmt.Fprintf(responseWriter, User.ToString())
 }
 
 func RetrieveUsers(responseWriter http.ResponseWriter, request *http.Request) {
+	GetFormat(request)
 	response := s.Users{}
 	responseWriter.Header().Set("Pragma", "no-cache")
-	database, openErr := sql.Open(DB_NAME, DB_CREDENTIALS)
-	defer database.Close()
-	if openErr != nil {
-		fmt.Fprintf(responseWriter, openErr.Error())
-	}
-	rows, readErr := database.Query("select * from users LIMIT 10")
-	if readErr != nil {
-		fmt.Fprintf(responseWriter, readErr.Error())
-	}
+
+	rows, readErr := Database.Query("select * from users LIMIT 10")
+	HandleError(readErr)
 	for rows.Next() {
 		user := s.User{}
-		rows.Scan(&user.ID, &user.Name, &user.First, &user.Last, &user.Email, &user.Image)
+		scanErr := rows.Scan(&user.ID, &user.Name, &user.First, &user.Last, &user.Email, &user.Image)
+		HandleError(scanErr)
 		response.Users = append(response.Users, user)
 	}
-	jsonResponse, marshalErr := json.Marshal(response)
-	if marshalErr != nil {
-		fmt.Fprintf(responseWriter, marshalErr.Error())
-	}
-	fmt.Fprintf(responseWriter, string(jsonResponse))
+	finalResult := SetFormat(response)
+	fmt.Fprintf(responseWriter, string(finalResult))
 }
 
 /**
@@ -102,9 +111,13 @@ func ReadUser(responseWriter http.ResponseWriter, request *http.Request) {
 	ReadUser := s.User{}
 
 	err := Database.QueryRow("select * from users where ID=?", id).Scan(&ReadUser.ID, &ReadUser.Name, &ReadUser.First, &ReadUser.Last, &ReadUser.Email)
-	if err != nil {
-		fmt.Fprintf(responseWriter, err.Error())
-	}
+	HandleError(err)
 	answer, _ := json.Marshal(ReadUser)
 	fmt.Fprintf(responseWriter, string(answer))
+}
+
+func HandleError(err error) {
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }
